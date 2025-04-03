@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Mancha de Cervantes</title>
+    <style>
+        :root {
+            --color-primary: #084f7b;
+            --color-secondary: #f9f9f9;
+            --color-accent: #00becc;
+            --color-text: #2E1A0F;
+            --color-highlight: #f7f7f7;
+        }
+        
+        body {
+            font-family: 'Times New Roman', serif;
+            background-color: var(--color-secondary);
+            color: var(--color-text);
+            margin: 0;
+            padding: 0;
+            background-image: url('https://img.freepik.com/free-photo/old-paper-texture_1194-5413.jpg');
+            background-attachment: fixed;
+        }
+        
+        header {
+            background-color: var(--color-primary);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 5px solid var(--color-accent);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            text-shadow: 2px 2px 4px #000;
+            font-style: italic;
+        }
+        
+        .subtitle {
+            font-style: italic;
+            margin-top: 0.5rem;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-around;
+            background-color: var(--color-accent);
+            padding: 1rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        nav a:hover {
+            background-color: var(--color-highlight);
+            color: var(--color-text);
+        }
+        
+        .container {
+            display: flex;
+            max-width: 1200px;
+            margin: 2rem auto;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background-color: rgba(245, 222, 179, 0.7);
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
+            margin-right: 2rem;
+        }
+        
+        .sidebar h3 {
+            color: var(--color-accent);
+            border-bottom: 2px dashed var(--color-accent);
+            padding-bottom: 0.5rem;
+        }
+        
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .sidebar li {
+            margin: 0.5rem 0;
+        }
+        
+        .sidebar a {
+            color: var(--color-text);
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        
+        .sidebar a:hover {
+            color: var(--color-primary);
+            padding-left: 5px;
+        }
+        
+        .main-content {
+            flex: 1;
+        }
+        
+        .book-section {
+            margin-bottom: 2rem;
+        }
+        
+        .section-title {
+            background-color: var(--color-primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px 5px 0 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 10px;
+        }
+        
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            padding: 1rem;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 0 0 5px 5px;
+            border: 1px solid var(--color-primary);
+            border-top: none;
+        }
+        
+        .book-card {
+            background-color: white;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 4px 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        .book-cover {
+            height: 250px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .book-info {
+            padding: 0.8rem;
+        }
+        
+        .book-title {
+            font-weight: bold;
+            margin-bottom: 0.3rem;
+            color: var(--color-accent);
+        }
+        
+        .book-author {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+        
+        .book-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+            margin-top: 0.5rem;
+        }
+        
+        .tag {
+            background-color: var(--color-highlight);
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.7rem;
+        }
+        
+        .book-status {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(139, 69, 19, 0.8);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+        }
+        
+        footer {
+            background-color: var(--color-primary);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .quijote-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: auto;
+                margin-right: 0;
+                margin-bottom: 2rem;
+            }
+            
+            .books-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><img src="https://i.pinimg.com/736x/3d/fd/58/3dfd58ae26ed0c0443760edb4499b79e.jpg"5.p alt="Icono Don Quijote" class="quijote-icon">La Mancha de Cervantes</h1>
+        <p class="subtitle">Donde los libros cobran vida como molinos de viento</p>
+    </header>
+    
+    <nav>
+        <a href="#"><i class="fas fa-home"></i> Inicio</a>
+        <a href="#"><i class="fas fa-book"></i> Biblioteca</a>
+        <a href="#"><i class="fas fa-search"></i> Buscar</a>
+        <a href="#"><i class="fas fa-user"></i> Mi cuenta</a>
+        <a href="#"><i class="fas fa-question-circle"></i> Ayuda</a>
+    </nav>
+    
+    <div class="container">
+        <aside class="sidebar">
+            <h3><i class="fas fa-list"></i> Categorías</h3>
+            <ul>
+                <li><a href="#">Literatura Clásica</a></li>
+                <li><a href="#">Amor y Romance</a></li>
+                <li><a href="#">Terror y Misterio</a></li>
+                <li><a href="#">Aventuras</a></li>
+                <li><a href="#">Poesía</a></li>
+                <li><a href="#">Teatro</a></li>
+                <li><a href="#">Filosofía</a></li>
+                <li><a href="#">Historia</a></li>
+                <li><a href="#">Mostrar todas...</a></li>
+            </ul>
+            
+            <h3><i class="fas fa-filter"></i> Filtros</h3>
+            <ul>
+                <li><a href="#">Más populares</a></li>
+                <li><a href="#">Nuevos lanzamientos</a></li>
+                <li><a href="#">En proceso</a></li>
+                <li><a href="#">Completados</a></li>
+                <li><a href="#">Cortos</a></li>
+                <li><a href="#">Largos</a></li>
+            </ul>
+            
+            <h3><i class="fas fa-user"></i> Mi Biblioteca</h3>
+            <ul>
+                <li><a href="#">Favoritos</a></li>
+                <li><a href="#">Leídos</a></li>
+                <li><a href="#">Por leer</a></li>
+                <li><a href="#">Notas</a></li>
+            </ul>
+        </aside>
+        
+        <main class="main-content">
+            <section class="book-section">
+                <div class="section-title">
+                    <i class="fas fa-heart"></i>
+                    <h2>Historias de Amor</h2>
+                </div>
+                <div class="books-grid">
+                    <div class="book-card" onclick="window.open('https://drive.google.com/file/d/1IgeEg_tsj63Nzi2uTRz63ASj3tqTfzRv/view')">
+                        <div class="book-cover" style="background-image: url('https://poptv.orange.es/wp-content/uploads/sites/3/2020/04/littlewomen2019_1400x2100_spanishcastilian.jpg');"></div>
+                        <div class="book-info">
+                            <div class="book-title">Mujerecitas</div>
+                            <div class="book-author">Louisa Alcott</div>
+                            <div class="book-tags">
+                                <span class="tag">romance</span>
+                                <span class="tag">drama</span>
+                                <span class="tag">adolecentes</span>
+                            </div>
+                        </div>
+                        <div class="book-status">En proceso - 73 págs.</div>
+                    </div>
+                    
+                    <div class="book-card" onclick="window.open('https://epage.pub/doc/culpa-mia1-mercedes-ron-w21zr49nl1')">
+                        <div class="book-cover" style="background-image: url('https://pics.filmaffinity.com/Culpa_maia-785263687-large.jpg');"></div>
+                        <div class="book-info">
+                            <div class="book-title">Culpa Mia</div>
+                            <div class="book-author">Mercedes Ron</div>
+                            <div class="book-tags">
+                                <span class="tag">adolecentes</span>
+                                <span class="tag">romance</span>
+                                <span class="tag">corazón roto</span>
+                            </div>
+                        </div>
+                        <div class="book-status">En proceso - 86 págs.</div>
+                    </div>
+                    
+                    <div class="book-card" onclick="window.open('https://drive.google.com/file/d/0B3WJqJZKobwbYk0xRG1LUTF5bjA/edit?resourcekey=0-SopEGgedc1yEMVpFT835LQ')">
+                        <div class="book-cover" style="background-image: url('https://th.bing.com/th/id/R.f1c00120f25903ed6f4c73abcb700397?rik=sg5pUq83XyGhtA&riu=http%3a%2f%2f1.bp.blogspot.com%2f-loEu1pOpOKc%2fVLaSZTAYEJI%2fAAAAAAAAILE%2fVECEMESu9Cc%2fs1600%2funa-imagen-11-portadas-libros-leidos-L-CCtY_E.jpeg&ehk=QjhohHSjkKjf2JQggQZwsjqyjAwzbVx8QgDMhEbiyMY%3d&risl=&pid=ImgRaw&r=0');"></div>
+                        <div class="book-info">
+                            <div class="book-title">Orgullo y Prejuicio</div>
+                            <div class="book-author">Jane Austen</div>
+                            <div class="book-tags">
+                                <span class="tag">clásico</span>
+                                <span class="tag">romance</span>
+                                <span class="tag">época</span>
+                            </div>
+                        </div>
+                        <div class="book-status">Completo - 279 págs.</div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="book-section">
+                <div class="section-title">
+                    <i class="fas fa-ghost"></i>
+                    <h2>Terror y Misterio</h2>
+                </div>
+                <div class="books-grid">
+                    <div class="book-card" onclick="window.open('https://drive.google.com/file/d/0Bxodj9lVZ6CuS2NBTE1ac2pvYU0/view?resourcekey=0-q4hM0yCq_HM35weypYgFMg')">
+                        <div class="book-cover" style="background-image: url('https://m.media-amazon.com/images/M/MV5BODU5YTRhNjQtYjFiNi00M2I5LTg4NTQtNjRkYjAyZTU5ZmRiXkEyXkFqcGdeQXVyMTAwMTM0NTA4._V1_FMjpg_UX1000_.jpg');"></div>
+                        <div class="book-info">
+                            <div class="book-title">Drácula</div>
+                            <div class="book-author">Bram Stoker</div>
+                            <div class="book-tags">
+                                <span class="tag">clásico</span>
+                                <span class="tag">vampiros</span>
+                                <span class="tag">terror</span>
+                            </div>
+                        </div>
+                        <div class="book-status">Completo - 418 págs.</div>
+                    </div>
+                    
+                    <div class="book-card" onclick="window.open('https://docs.google.com/file/d/0B3N8jtudSydeYWgwbzJxOXZYS1U/edit?resourcekey=0-G7ZxKLWMipMM8vqegxBU3Q')">
+                        <div class="book-cover" style="background-image: url('https://assets.rappler.com/FE9D9916F9A14D929A28A22BDF4D710A/img/353F7EE70A9E4497885AD8C024795289/May_08_2017-it-pennywise-001.jpg');"></div>
+                        <div class="book-info">
+                            <div class="book-title">It (Eso)</div>
+                            <div class="book-author">Stephen King</div>
+                            <div class="book-tags">
+                                <span class="tag">terror</span>
+                                <span class="tag">payaso</span>
+                                <span class="tag">psicológico</span>
+                            </div>
+                        </div>
+                        <div class="book-status">Completo - 1503 págs.</div>
+                    </div>
+                    
+                    <div class="book-card" onclick="window.open('https://drive.google.com/file/d/0B8Bcptq_5FyXamtia1VwQ3hxNGM/view?resourcekey=0-iM1c9DHUqbsCZUHsIbO9zg')">
+                        <div class="book-cover" style="background-image: url('https://th.bing.com/th/id/R.cd1182521be1683a3cf4e8e18c2a5a8c?rik=EU%2bS%2fMJOWvw7rg&riu=http%3a%2f%2fwww.anayainfantilyjuvenil.com%2fimagenes%2ffrankensteinn.jpg&ehk=037FbyB72IsYB07ztUQemRkqtEhwVcb0qnqclN2jLSI%3d&risl=&pid=ImgRaw&r=0');"></div>
+                        <div class="book-info">
+                            <div class="book-title">Frankenstein</div>
+                            <div class="book-author">Mary Shelley</div>
+                            <div class="book-tags">
+                                <span class="tag">clásico</span>
+                                <span class="tag">monstruo</span>
+                                <span class="tag">gótico</span>
+                            </div>
+                        </div>
+                        <div class="book-status">Completo - 280 págs.</div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="book-section">
+                <div class="section-title">
+                    <i class="fas fa-landmark"></i>
+                    <h2>Literatura Clásica</h2>
+                </div>
+                <div class="books-grid">
+                    <div class="book-card" onclick="window.open('https://drive.google.com/file/d/1oZ_sgXA_KJaYhHo3igglFdHYl0mpjUCR/view')">
+                        <div class="book-cover" style="background-image: url('https://th.bing.com/th/id/OIP.p2Qht0iMCaSgQb3wbzHukAHaKN?rs=1&pid=ImgDetMain');"></div>
+                        <div class="book-info">
+                            <div class="book-title">Don Quijote de la Mancha</div>
+                            <div class="book-author">Miguel de Cervantes</div>
+                            <div class="book-tags">
+                                <span class="tag">clásico</span>
+                                <span class="tag">aventura</span>
+                                <span class="tag">caballeros</span>
+                            </div>
+                        </div>
+                        <div class="book-status">Completo - 1023 págs.</div>
+                    </div>
+                    
+                    <div class="book-card" onclick="window.open('https://drive.google.com/file/d/0B8i_fahFU7-ha3hrYmo5R1hfYU0/edit?resourcekey=0-LjVX7U1vLlmI5fndIS0y3g')">
+                        <div class="book-cover" style="background-image: url('https://th.bing.com/th/id/OIP.wSKlwjdlc--DoQA-LjxcrgHaLa?rs=1&pid=ImgDetMain');"></div>
+                        <div class="book-info">
+                            <div class="book-title">Cien Años de Soledad</div>
+                            <div class="book-author">Gabriel García Márquez</div>
+                            <div class="book-tags">
+                                <span class="tag">clásico</span>
+                                <span class="tag">realismo mágico</span>
+                                <span class="tag">amor</span>
+                            </div>
+                        </div>
+                        <div class="book-status">Completo - 432 págs.</div>
+                    </div>
+                    
+                    <div class="book-card" onclick="window.open('https://drive.google.com/file/d/0BymtDFgmADVBMm00bC1La3B0eE0/view?resourcekey=0--kK0eoZyl1Qfo88oY9-cJQ')">
+                        <div class="book-cover" style="background-image: url('https://www.agapea.com/Mestas-Ediciones-S-L-/La-divina-comedia-i6n15475051.jpg');"></div>
+                        <div class="book-info">
+                            <div class="book-title">La Divina Comedia</div>
+                            <div class="book-author">Dante Alighieri</div>
+                            <div class="book-tags">
+                                <span class="tag">clásico</span>
+                                <span class="tag">poesía</span>
+                                <span class="tag">religión</span>
+                            </div>
+                        </div>
+                        <div class="book-status">Completo - 798 págs.</div>
+                    </div>
+                </div>
+            </section>
+    
+            <main class="main-content">
+                <!-- Sección de Literatura Ecuatoriana -->
+                <section class="book-section">
+                    <div class="section-title">
+                        <i class="fas fa-flag"></i>
+                        <h2>Literatura Ecuatoriana</h2>
+                    </div>
+                    <div class="books-grid">
+                        <div class="book-card" onclick="window.open('https://drive.google.com/file/d/0Bzlg5tclu64mR2diT0c1RVhTdnlDN2REdUFxNGhEQQ/view?pli=1&resourcekey=0-3Y4XXbSdGLmf82mu9eHS2g)">
+                            <div class="book-cover" style="background-image: url('https://th.bing.com/th/id/OIP.Q4pmJen0GdKrJb65SwrsjwHaLg?rs=1&pid=ImgDetMain');"></div>
+                            <div class="book-info">
+                                <div class="book-title">Huasipungo</div>
+                                <div class="book-author">Jorge Icaza</div>
+                                <div class="book-tags">
+                                    <span class="tag">indigenismo</span>
+                                    <span class="tag">realismo</span>
+                                    <span class="tag">novela social</span>
+                                </div>
+                            </div>
+                            <div class="book-status">Completo - 180 págs.</div>
+                        </div>
+                        
+                        <div class="book-card" onclick="window.open('https://drive.google.com/file/d/1_9SexViwGIh8WV0ixyUYBpIyDkkfq50I/view')">
+                            <div class="book-cover" style="background-image: url('https://th.bing.com/th/id/OIP.eEqJqrq_132peDyby0FFNgHaL1?rs=1&pid=ImgDetMain');"></div>
+                            <div class="book-info">
+                                <div class="book-title">Las Cruces sobre el Agua</div>
+                                <div class="book-author">Joaquín Gallegos Lara</div>
+                                <div class="book-tags">
+                                    <span class="tag">histórica</span>
+                                    <span class="tag">realismo</span>
+                                    <span class="tag">novela</span>
+                                </div>
+                            </div>
+                            <div class="book-status">Completo - 250 págs.</div>
+                        </div>
+                        
+                        <div class="book-card" onclick="window.open('https://drive.google.com/file/d/0B5gEjI2dt4VbZ25NZllyUF9KTW8/view?resourcekey=0-wFmGf0CXmZOpKz4dwtCIGA')">
+                            <div class="book-cover" style="background-image: url('https://th.bing.com/th/id/OIP.ZQYPCBnHDKP-D--HHRXi1wHaEy?pid=ImgDet&w=474&h=306&rs=1');"></div>
+                            <div class="book-info">
+                                <div class="book-title">Pedro Paramo</div>
+                                <div class="book-author">Juan Rulfo</div>
+                                <div class="book-tags">
+                                    <span class="tag">ficcion</span>
+                                    <span class="tag">suspenso</span>
+                                    <span class="tag">novela</span>
+                                </div>
+                            </div>
+                            <div class="book-status">Completo - 132 págs.</div>
+                        </div>
+                        
+                        <div class="book-card" onclick="window.open('https://uedelpacifico.com/wp-content/uploads/2020/06/a_la_costa.pdf')">
+                            <div class="book-cover" style="background-image: url('https://th.bing.com/th/id/R.2db641d132850b9ce6d2ac51ee185cce?rik=xXk0b%2bGEDj1LdA&riu=http%3a%2f%2fwww.radmandi.com%2fwp-content%2fuploads%2f2019%2f01%2fliteratura-ariel-clasicos-ecuatorianos-a-la-costa.jpg&ehk=NqDAPAdLwH9dGiGK172ZlK%2f2OyL58QJr57IbysuNoHY%3d&risl=&pid=ImgRaw&r=0');"></div>
+                            <div class="book-info">
+                                <div class="book-title">A la Costa</div>
+                                <div class="book-author">Luis Alfredo Martinez</div>
+                                <div class="book-tags">
+                                    <span class="tag">indigenismo</span>
+                                    <span class="tag">realismo</span>
+                                    <span class="tag">novela social</span>
+                                </div>
+                            </div>
+                            <div class="book-status">Completo - 200 págs.</div>
+                        </div>
+                    </div>
+                    
+    <footer>
+        <p>© 2025 La Mancha de Cervantes - Todos los derechos reservados</p>
+        <p>By: Romel Toalombo</p>
+    </footer>
+    
+    <!-- Font Awesome para los iconos -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>
